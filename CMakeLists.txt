@@ -83,6 +83,12 @@ include_directories(
 	${area_SOURCE_DIR}/kbool/src/
 )
 
+add_library(
+    heeksarea
+    STATIC
+    ${AREA_SRC}
+)
+
 # this makes the Python module
 add_library(
     area

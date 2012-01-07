@@ -58,7 +58,7 @@ public:
 	void FitArcs();
 	unsigned int num_curves(){return m_curves.size();}
 	Point NearestPoint(const Point& p)const;
-	void GetBox(CBox &box);
+	void GetBox(CAreaBox &box);
 	void Reorder();
 	void MakePocketToolpath(std::list<CCurve> &toolpath, const CAreaPocketParams &params)const;
 	void SplitAndMakePocketToolpath(std::list<CCurve> &toolpath, const CAreaPocketParams &params)const;

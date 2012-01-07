@@ -53,7 +53,7 @@ public:
 	Span(const Point& p, const CVertex& v, bool start_span = false):m_start_span(start_span), m_p(p), m_v(v){}
 	Point NearestPoint(const Point& p)const;
 	Point NearestPoint(const Span& p, double *d = NULL)const;
-	void GetBox(CBox &box);
+	void GetBox(CAreaBox &box);
 	double IncludedAngle()const;
 	double GetArea()const;
 	bool On(const Point& p, double* t = NULL)const;
@@ -80,7 +80,7 @@ public:
 	Point NearestPoint(const Point& p)const;
 	Point NearestPoint(const CCurve& p, double *d = NULL)const;
 	Point NearestPoint(const Span& p, double *d = NULL)const;
-	void GetBox(CBox &box);
+	void GetBox(CAreaBox &box);
 	void Reverse();
 	double GetArea()const;
 	bool IsClockwise()const{return GetArea()>0;}

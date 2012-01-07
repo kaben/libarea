@@ -278,12 +278,12 @@ BOOST_PYTHON_MODULE(area) {
         .def("UnFitArcs",&CCurve::UnFitArcs)
     ;
 
-	bp::class_<CBox>("Box") 
-        .def(bp::init<CBox>())
-		.def("MinX", &CBox::MinX)
-		.def("MaxX", &CBox::MaxX)
-		.def("MinY", &CBox::MinY)
-		.def("MaxY", &CBox::MaxY)
+	bp::class_<CAreaBox>("Box") 
+        .def(bp::init<CAreaBox>())
+		.def("MinX", &CAreaBox::MinX)
+		.def("MaxX", &CAreaBox::MaxX)
+		.def("MinY", &CAreaBox::MinY)
+		.def("MaxY", &CAreaBox::MaxY)
     ;
 
 	bp::class_<CArea>("Area") 

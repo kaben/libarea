@@ -372,7 +372,7 @@ Point CCurve::NearestPoint(const CCurve& c, double *d)const
 	return best_point;
 }
 
-void CCurve::GetBox(CBox &box)
+void CCurve::GetBox(CAreaBox &box)
 {
 	Point prev_p = Point(0, 0);
 	bool prev_p_valid = false;
@@ -964,7 +964,7 @@ static Point QuadrantEndPoint(int i)
 	}
 }
 
-void Span::GetBox(CBox &box)
+void Span::GetBox(CAreaBox &box)
 {
 	box.Insert(m_p);
 	box.Insert(m_v.m_p);
