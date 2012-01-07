@@ -39,10 +39,10 @@ RM = /usr/bin/cmake -E remove -f
 CMAKE_EDIT_COMMAND = /usr/bin/ccmake
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc/libarea
+CMAKE_SOURCE_DIR = /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc/libarea
+CMAKE_BINARY_DIR = /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -98,6 +98,26 @@ list_install_components:
 list_install_components/fast: list_install_components
 .PHONY : list_install_components/fast
 
+# Special rule for the target package
+package: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Run CPack packaging tool..."
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && /usr/bin/cpack --config ./CPackConfig.cmake
+.PHONY : package
+
+# Special rule for the target package
+package/fast: package
+.PHONY : package/fast
+
+# Special rule for the target package_source
+package_source:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Run CPack packaging tool for source..."
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && /usr/bin/cpack --config ./CPackSourceConfig.cmake /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc/CPackSourceConfig.cmake
+.PHONY : package_source
+
+# Special rule for the target package_source
+package_source/fast: package_source
+.PHONY : package_source/fast
+
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
@@ -110,14 +130,14 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc/libarea/CMakeFiles /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc/libarea/CMakeFiles/progress.marks
-	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc/libarea/CMakeFiles 0
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(CMAKE_COMMAND) -E cmake_progress_start /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc/CMakeFiles /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc/libarea/CMakeFiles/progress.marks
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f CMakeFiles/Makefile2 libarea/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	$(MAKE) -f CMakeFiles/Makefile2 clean
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f CMakeFiles/Makefile2 libarea/clean
 .PHONY : clean
 
 # The main clean target
@@ -126,493 +146,495 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	$(MAKE) -f CMakeFiles/Makefile2 preinstall
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f CMakeFiles/Makefile2 libarea/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	$(MAKE) -f CMakeFiles/Makefile2 preinstall
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f CMakeFiles/Makefile2 libarea/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	$(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
-#=============================================================================
-# Target rules for targets named area
+# Convenience name for target.
+libarea/CMakeFiles/area.dir/rule:
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f CMakeFiles/Makefile2 libarea/CMakeFiles/area.dir/rule
+.PHONY : libarea/CMakeFiles/area.dir/rule
 
-# Build rule for target.
-area: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 area
+# Convenience name for target.
+area: libarea/CMakeFiles/area.dir/rule
 .PHONY : area
 
 # fast build rule for target.
 area/fast:
-	$(MAKE) -f CMakeFiles/area.dir/build.make CMakeFiles/area.dir/build
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/area.dir/build.make libarea/CMakeFiles/area.dir/build
 .PHONY : area/fast
 
-#=============================================================================
-# Target rules for targets named heeksarea
+# Convenience name for target.
+libarea/CMakeFiles/heeksarea.dir/rule:
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f CMakeFiles/Makefile2 libarea/CMakeFiles/heeksarea.dir/rule
+.PHONY : libarea/CMakeFiles/heeksarea.dir/rule
 
-# Build rule for target.
-heeksarea: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 heeksarea
+# Convenience name for target.
+heeksarea: libarea/CMakeFiles/heeksarea.dir/rule
 .PHONY : heeksarea
 
 # fast build rule for target.
 heeksarea/fast:
-	$(MAKE) -f CMakeFiles/heeksarea.dir/build.make CMakeFiles/heeksarea.dir/build
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/heeksarea.dir/build.make libarea/CMakeFiles/heeksarea.dir/build
 .PHONY : heeksarea/fast
 
 # target to build an object file
 Arc.o:
-	$(MAKE) -f CMakeFiles/area.dir/build.make CMakeFiles/area.dir/Arc.o
-	$(MAKE) -f CMakeFiles/heeksarea.dir/build.make CMakeFiles/heeksarea.dir/Arc.o
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/area.dir/build.make libarea/CMakeFiles/area.dir/Arc.o
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/heeksarea.dir/build.make libarea/CMakeFiles/heeksarea.dir/Arc.o
 .PHONY : Arc.o
 
 # target to preprocess a source file
 Arc.i:
-	$(MAKE) -f CMakeFiles/area.dir/build.make CMakeFiles/area.dir/Arc.i
-	$(MAKE) -f CMakeFiles/heeksarea.dir/build.make CMakeFiles/heeksarea.dir/Arc.i
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/area.dir/build.make libarea/CMakeFiles/area.dir/Arc.i
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/heeksarea.dir/build.make libarea/CMakeFiles/heeksarea.dir/Arc.i
 .PHONY : Arc.i
 
 # target to generate assembly for a file
 Arc.s:
-	$(MAKE) -f CMakeFiles/area.dir/build.make CMakeFiles/area.dir/Arc.s
-	$(MAKE) -f CMakeFiles/heeksarea.dir/build.make CMakeFiles/heeksarea.dir/Arc.s
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/area.dir/build.make libarea/CMakeFiles/area.dir/Arc.s
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/heeksarea.dir/build.make libarea/CMakeFiles/heeksarea.dir/Arc.s
 .PHONY : Arc.s
 
 # target to build an object file
 Area.o:
-	$(MAKE) -f CMakeFiles/area.dir/build.make CMakeFiles/area.dir/Area.o
-	$(MAKE) -f CMakeFiles/heeksarea.dir/build.make CMakeFiles/heeksarea.dir/Area.o
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/area.dir/build.make libarea/CMakeFiles/area.dir/Area.o
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/heeksarea.dir/build.make libarea/CMakeFiles/heeksarea.dir/Area.o
 .PHONY : Area.o
 
 # target to preprocess a source file
 Area.i:
-	$(MAKE) -f CMakeFiles/area.dir/build.make CMakeFiles/area.dir/Area.i
-	$(MAKE) -f CMakeFiles/heeksarea.dir/build.make CMakeFiles/heeksarea.dir/Area.i
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/area.dir/build.make libarea/CMakeFiles/area.dir/Area.i
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/heeksarea.dir/build.make libarea/CMakeFiles/heeksarea.dir/Area.i
 .PHONY : Area.i
 
 # target to generate assembly for a file
 Area.s:
-	$(MAKE) -f CMakeFiles/area.dir/build.make CMakeFiles/area.dir/Area.s
-	$(MAKE) -f CMakeFiles/heeksarea.dir/build.make CMakeFiles/heeksarea.dir/Area.s
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/area.dir/build.make libarea/CMakeFiles/area.dir/Area.s
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/heeksarea.dir/build.make libarea/CMakeFiles/heeksarea.dir/Area.s
 .PHONY : Area.s
 
 # target to build an object file
 AreaBoolean.o:
-	$(MAKE) -f CMakeFiles/area.dir/build.make CMakeFiles/area.dir/AreaBoolean.o
-	$(MAKE) -f CMakeFiles/heeksarea.dir/build.make CMakeFiles/heeksarea.dir/AreaBoolean.o
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/area.dir/build.make libarea/CMakeFiles/area.dir/AreaBoolean.o
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/heeksarea.dir/build.make libarea/CMakeFiles/heeksarea.dir/AreaBoolean.o
 .PHONY : AreaBoolean.o
 
 # target to preprocess a source file
 AreaBoolean.i:
-	$(MAKE) -f CMakeFiles/area.dir/build.make CMakeFiles/area.dir/AreaBoolean.i
-	$(MAKE) -f CMakeFiles/heeksarea.dir/build.make CMakeFiles/heeksarea.dir/AreaBoolean.i
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/area.dir/build.make libarea/CMakeFiles/area.dir/AreaBoolean.i
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/heeksarea.dir/build.make libarea/CMakeFiles/heeksarea.dir/AreaBoolean.i
 .PHONY : AreaBoolean.i
 
 # target to generate assembly for a file
 AreaBoolean.s:
-	$(MAKE) -f CMakeFiles/area.dir/build.make CMakeFiles/area.dir/AreaBoolean.s
-	$(MAKE) -f CMakeFiles/heeksarea.dir/build.make CMakeFiles/heeksarea.dir/AreaBoolean.s
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/area.dir/build.make libarea/CMakeFiles/area.dir/AreaBoolean.s
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/heeksarea.dir/build.make libarea/CMakeFiles/heeksarea.dir/AreaBoolean.s
 .PHONY : AreaBoolean.s
 
 # target to build an object file
 AreaDxf.o:
-	$(MAKE) -f CMakeFiles/area.dir/build.make CMakeFiles/area.dir/AreaDxf.o
-	$(MAKE) -f CMakeFiles/heeksarea.dir/build.make CMakeFiles/heeksarea.dir/AreaDxf.o
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/area.dir/build.make libarea/CMakeFiles/area.dir/AreaDxf.o
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/heeksarea.dir/build.make libarea/CMakeFiles/heeksarea.dir/AreaDxf.o
 .PHONY : AreaDxf.o
 
 # target to preprocess a source file
 AreaDxf.i:
-	$(MAKE) -f CMakeFiles/area.dir/build.make CMakeFiles/area.dir/AreaDxf.i
-	$(MAKE) -f CMakeFiles/heeksarea.dir/build.make CMakeFiles/heeksarea.dir/AreaDxf.i
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/area.dir/build.make libarea/CMakeFiles/area.dir/AreaDxf.i
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/heeksarea.dir/build.make libarea/CMakeFiles/heeksarea.dir/AreaDxf.i
 .PHONY : AreaDxf.i
 
 # target to generate assembly for a file
 AreaDxf.s:
-	$(MAKE) -f CMakeFiles/area.dir/build.make CMakeFiles/area.dir/AreaDxf.s
-	$(MAKE) -f CMakeFiles/heeksarea.dir/build.make CMakeFiles/heeksarea.dir/AreaDxf.s
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/area.dir/build.make libarea/CMakeFiles/area.dir/AreaDxf.s
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/heeksarea.dir/build.make libarea/CMakeFiles/heeksarea.dir/AreaDxf.s
 .PHONY : AreaDxf.s
 
 # target to build an object file
 AreaOrderer.o:
-	$(MAKE) -f CMakeFiles/area.dir/build.make CMakeFiles/area.dir/AreaOrderer.o
-	$(MAKE) -f CMakeFiles/heeksarea.dir/build.make CMakeFiles/heeksarea.dir/AreaOrderer.o
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/area.dir/build.make libarea/CMakeFiles/area.dir/AreaOrderer.o
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/heeksarea.dir/build.make libarea/CMakeFiles/heeksarea.dir/AreaOrderer.o
 .PHONY : AreaOrderer.o
 
 # target to preprocess a source file
 AreaOrderer.i:
-	$(MAKE) -f CMakeFiles/area.dir/build.make CMakeFiles/area.dir/AreaOrderer.i
-	$(MAKE) -f CMakeFiles/heeksarea.dir/build.make CMakeFiles/heeksarea.dir/AreaOrderer.i
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/area.dir/build.make libarea/CMakeFiles/area.dir/AreaOrderer.i
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/heeksarea.dir/build.make libarea/CMakeFiles/heeksarea.dir/AreaOrderer.i
 .PHONY : AreaOrderer.i
 
 # target to generate assembly for a file
 AreaOrderer.s:
-	$(MAKE) -f CMakeFiles/area.dir/build.make CMakeFiles/area.dir/AreaOrderer.s
-	$(MAKE) -f CMakeFiles/heeksarea.dir/build.make CMakeFiles/heeksarea.dir/AreaOrderer.s
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/area.dir/build.make libarea/CMakeFiles/area.dir/AreaOrderer.s
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/heeksarea.dir/build.make libarea/CMakeFiles/heeksarea.dir/AreaOrderer.s
 .PHONY : AreaOrderer.s
 
 # target to build an object file
 AreaPocket.o:
-	$(MAKE) -f CMakeFiles/area.dir/build.make CMakeFiles/area.dir/AreaPocket.o
-	$(MAKE) -f CMakeFiles/heeksarea.dir/build.make CMakeFiles/heeksarea.dir/AreaPocket.o
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/area.dir/build.make libarea/CMakeFiles/area.dir/AreaPocket.o
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/heeksarea.dir/build.make libarea/CMakeFiles/heeksarea.dir/AreaPocket.o
 .PHONY : AreaPocket.o
 
 # target to preprocess a source file
 AreaPocket.i:
-	$(MAKE) -f CMakeFiles/area.dir/build.make CMakeFiles/area.dir/AreaPocket.i
-	$(MAKE) -f CMakeFiles/heeksarea.dir/build.make CMakeFiles/heeksarea.dir/AreaPocket.i
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/area.dir/build.make libarea/CMakeFiles/area.dir/AreaPocket.i
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/heeksarea.dir/build.make libarea/CMakeFiles/heeksarea.dir/AreaPocket.i
 .PHONY : AreaPocket.i
 
 # target to generate assembly for a file
 AreaPocket.s:
-	$(MAKE) -f CMakeFiles/area.dir/build.make CMakeFiles/area.dir/AreaPocket.s
-	$(MAKE) -f CMakeFiles/heeksarea.dir/build.make CMakeFiles/heeksarea.dir/AreaPocket.s
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/area.dir/build.make libarea/CMakeFiles/area.dir/AreaPocket.s
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/heeksarea.dir/build.make libarea/CMakeFiles/heeksarea.dir/AreaPocket.s
 .PHONY : AreaPocket.s
 
 # target to build an object file
 Circle.o:
-	$(MAKE) -f CMakeFiles/area.dir/build.make CMakeFiles/area.dir/Circle.o
-	$(MAKE) -f CMakeFiles/heeksarea.dir/build.make CMakeFiles/heeksarea.dir/Circle.o
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/area.dir/build.make libarea/CMakeFiles/area.dir/Circle.o
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/heeksarea.dir/build.make libarea/CMakeFiles/heeksarea.dir/Circle.o
 .PHONY : Circle.o
 
 # target to preprocess a source file
 Circle.i:
-	$(MAKE) -f CMakeFiles/area.dir/build.make CMakeFiles/area.dir/Circle.i
-	$(MAKE) -f CMakeFiles/heeksarea.dir/build.make CMakeFiles/heeksarea.dir/Circle.i
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/area.dir/build.make libarea/CMakeFiles/area.dir/Circle.i
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/heeksarea.dir/build.make libarea/CMakeFiles/heeksarea.dir/Circle.i
 .PHONY : Circle.i
 
 # target to generate assembly for a file
 Circle.s:
-	$(MAKE) -f CMakeFiles/area.dir/build.make CMakeFiles/area.dir/Circle.s
-	$(MAKE) -f CMakeFiles/heeksarea.dir/build.make CMakeFiles/heeksarea.dir/Circle.s
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/area.dir/build.make libarea/CMakeFiles/area.dir/Circle.s
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/heeksarea.dir/build.make libarea/CMakeFiles/heeksarea.dir/Circle.s
 .PHONY : Circle.s
 
 # target to build an object file
 Curve.o:
-	$(MAKE) -f CMakeFiles/area.dir/build.make CMakeFiles/area.dir/Curve.o
-	$(MAKE) -f CMakeFiles/heeksarea.dir/build.make CMakeFiles/heeksarea.dir/Curve.o
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/area.dir/build.make libarea/CMakeFiles/area.dir/Curve.o
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/heeksarea.dir/build.make libarea/CMakeFiles/heeksarea.dir/Curve.o
 .PHONY : Curve.o
 
 # target to preprocess a source file
 Curve.i:
-	$(MAKE) -f CMakeFiles/area.dir/build.make CMakeFiles/area.dir/Curve.i
-	$(MAKE) -f CMakeFiles/heeksarea.dir/build.make CMakeFiles/heeksarea.dir/Curve.i
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/area.dir/build.make libarea/CMakeFiles/area.dir/Curve.i
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/heeksarea.dir/build.make libarea/CMakeFiles/heeksarea.dir/Curve.i
 .PHONY : Curve.i
 
 # target to generate assembly for a file
 Curve.s:
-	$(MAKE) -f CMakeFiles/area.dir/build.make CMakeFiles/area.dir/Curve.s
-	$(MAKE) -f CMakeFiles/heeksarea.dir/build.make CMakeFiles/heeksarea.dir/Curve.s
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/area.dir/build.make libarea/CMakeFiles/area.dir/Curve.s
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/heeksarea.dir/build.make libarea/CMakeFiles/heeksarea.dir/Curve.s
 .PHONY : Curve.s
 
 # target to build an object file
 PythonStuff.o:
-	$(MAKE) -f CMakeFiles/area.dir/build.make CMakeFiles/area.dir/PythonStuff.o
-	$(MAKE) -f CMakeFiles/heeksarea.dir/build.make CMakeFiles/heeksarea.dir/PythonStuff.o
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/area.dir/build.make libarea/CMakeFiles/area.dir/PythonStuff.o
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/heeksarea.dir/build.make libarea/CMakeFiles/heeksarea.dir/PythonStuff.o
 .PHONY : PythonStuff.o
 
 # target to preprocess a source file
 PythonStuff.i:
-	$(MAKE) -f CMakeFiles/area.dir/build.make CMakeFiles/area.dir/PythonStuff.i
-	$(MAKE) -f CMakeFiles/heeksarea.dir/build.make CMakeFiles/heeksarea.dir/PythonStuff.i
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/area.dir/build.make libarea/CMakeFiles/area.dir/PythonStuff.i
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/heeksarea.dir/build.make libarea/CMakeFiles/heeksarea.dir/PythonStuff.i
 .PHONY : PythonStuff.i
 
 # target to generate assembly for a file
 PythonStuff.s:
-	$(MAKE) -f CMakeFiles/area.dir/build.make CMakeFiles/area.dir/PythonStuff.s
-	$(MAKE) -f CMakeFiles/heeksarea.dir/build.make CMakeFiles/heeksarea.dir/PythonStuff.s
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/area.dir/build.make libarea/CMakeFiles/area.dir/PythonStuff.s
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/heeksarea.dir/build.make libarea/CMakeFiles/heeksarea.dir/PythonStuff.s
 .PHONY : PythonStuff.s
 
 # target to build an object file
 dxf.o:
-	$(MAKE) -f CMakeFiles/area.dir/build.make CMakeFiles/area.dir/dxf.o
-	$(MAKE) -f CMakeFiles/heeksarea.dir/build.make CMakeFiles/heeksarea.dir/dxf.o
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/area.dir/build.make libarea/CMakeFiles/area.dir/dxf.o
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/heeksarea.dir/build.make libarea/CMakeFiles/heeksarea.dir/dxf.o
 .PHONY : dxf.o
 
 # target to preprocess a source file
 dxf.i:
-	$(MAKE) -f CMakeFiles/area.dir/build.make CMakeFiles/area.dir/dxf.i
-	$(MAKE) -f CMakeFiles/heeksarea.dir/build.make CMakeFiles/heeksarea.dir/dxf.i
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/area.dir/build.make libarea/CMakeFiles/area.dir/dxf.i
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/heeksarea.dir/build.make libarea/CMakeFiles/heeksarea.dir/dxf.i
 .PHONY : dxf.i
 
 # target to generate assembly for a file
 dxf.s:
-	$(MAKE) -f CMakeFiles/area.dir/build.make CMakeFiles/area.dir/dxf.s
-	$(MAKE) -f CMakeFiles/heeksarea.dir/build.make CMakeFiles/heeksarea.dir/dxf.s
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/area.dir/build.make libarea/CMakeFiles/area.dir/dxf.s
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/heeksarea.dir/build.make libarea/CMakeFiles/heeksarea.dir/dxf.s
 .PHONY : dxf.s
 
 # target to build an object file
 kbool/src/booleng.o:
-	$(MAKE) -f CMakeFiles/area.dir/build.make CMakeFiles/area.dir/kbool/src/booleng.o
-	$(MAKE) -f CMakeFiles/heeksarea.dir/build.make CMakeFiles/heeksarea.dir/kbool/src/booleng.o
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/area.dir/build.make libarea/CMakeFiles/area.dir/kbool/src/booleng.o
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/heeksarea.dir/build.make libarea/CMakeFiles/heeksarea.dir/kbool/src/booleng.o
 .PHONY : kbool/src/booleng.o
 
 # target to preprocess a source file
 kbool/src/booleng.i:
-	$(MAKE) -f CMakeFiles/area.dir/build.make CMakeFiles/area.dir/kbool/src/booleng.i
-	$(MAKE) -f CMakeFiles/heeksarea.dir/build.make CMakeFiles/heeksarea.dir/kbool/src/booleng.i
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/area.dir/build.make libarea/CMakeFiles/area.dir/kbool/src/booleng.i
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/heeksarea.dir/build.make libarea/CMakeFiles/heeksarea.dir/kbool/src/booleng.i
 .PHONY : kbool/src/booleng.i
 
 # target to generate assembly for a file
 kbool/src/booleng.s:
-	$(MAKE) -f CMakeFiles/area.dir/build.make CMakeFiles/area.dir/kbool/src/booleng.s
-	$(MAKE) -f CMakeFiles/heeksarea.dir/build.make CMakeFiles/heeksarea.dir/kbool/src/booleng.s
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/area.dir/build.make libarea/CMakeFiles/area.dir/kbool/src/booleng.s
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/heeksarea.dir/build.make libarea/CMakeFiles/heeksarea.dir/kbool/src/booleng.s
 .PHONY : kbool/src/booleng.s
 
 # target to build an object file
 kbool/src/graph.o:
-	$(MAKE) -f CMakeFiles/area.dir/build.make CMakeFiles/area.dir/kbool/src/graph.o
-	$(MAKE) -f CMakeFiles/heeksarea.dir/build.make CMakeFiles/heeksarea.dir/kbool/src/graph.o
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/area.dir/build.make libarea/CMakeFiles/area.dir/kbool/src/graph.o
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/heeksarea.dir/build.make libarea/CMakeFiles/heeksarea.dir/kbool/src/graph.o
 .PHONY : kbool/src/graph.o
 
 # target to preprocess a source file
 kbool/src/graph.i:
-	$(MAKE) -f CMakeFiles/area.dir/build.make CMakeFiles/area.dir/kbool/src/graph.i
-	$(MAKE) -f CMakeFiles/heeksarea.dir/build.make CMakeFiles/heeksarea.dir/kbool/src/graph.i
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/area.dir/build.make libarea/CMakeFiles/area.dir/kbool/src/graph.i
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/heeksarea.dir/build.make libarea/CMakeFiles/heeksarea.dir/kbool/src/graph.i
 .PHONY : kbool/src/graph.i
 
 # target to generate assembly for a file
 kbool/src/graph.s:
-	$(MAKE) -f CMakeFiles/area.dir/build.make CMakeFiles/area.dir/kbool/src/graph.s
-	$(MAKE) -f CMakeFiles/heeksarea.dir/build.make CMakeFiles/heeksarea.dir/kbool/src/graph.s
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/area.dir/build.make libarea/CMakeFiles/area.dir/kbool/src/graph.s
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/heeksarea.dir/build.make libarea/CMakeFiles/heeksarea.dir/kbool/src/graph.s
 .PHONY : kbool/src/graph.s
 
 # target to build an object file
 kbool/src/graphlst.o:
-	$(MAKE) -f CMakeFiles/area.dir/build.make CMakeFiles/area.dir/kbool/src/graphlst.o
-	$(MAKE) -f CMakeFiles/heeksarea.dir/build.make CMakeFiles/heeksarea.dir/kbool/src/graphlst.o
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/area.dir/build.make libarea/CMakeFiles/area.dir/kbool/src/graphlst.o
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/heeksarea.dir/build.make libarea/CMakeFiles/heeksarea.dir/kbool/src/graphlst.o
 .PHONY : kbool/src/graphlst.o
 
 # target to preprocess a source file
 kbool/src/graphlst.i:
-	$(MAKE) -f CMakeFiles/area.dir/build.make CMakeFiles/area.dir/kbool/src/graphlst.i
-	$(MAKE) -f CMakeFiles/heeksarea.dir/build.make CMakeFiles/heeksarea.dir/kbool/src/graphlst.i
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/area.dir/build.make libarea/CMakeFiles/area.dir/kbool/src/graphlst.i
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/heeksarea.dir/build.make libarea/CMakeFiles/heeksarea.dir/kbool/src/graphlst.i
 .PHONY : kbool/src/graphlst.i
 
 # target to generate assembly for a file
 kbool/src/graphlst.s:
-	$(MAKE) -f CMakeFiles/area.dir/build.make CMakeFiles/area.dir/kbool/src/graphlst.s
-	$(MAKE) -f CMakeFiles/heeksarea.dir/build.make CMakeFiles/heeksarea.dir/kbool/src/graphlst.s
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/area.dir/build.make libarea/CMakeFiles/area.dir/kbool/src/graphlst.s
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/heeksarea.dir/build.make libarea/CMakeFiles/heeksarea.dir/kbool/src/graphlst.s
 .PHONY : kbool/src/graphlst.s
 
 # target to build an object file
 kbool/src/instonly.o:
-	$(MAKE) -f CMakeFiles/area.dir/build.make CMakeFiles/area.dir/kbool/src/instonly.o
-	$(MAKE) -f CMakeFiles/heeksarea.dir/build.make CMakeFiles/heeksarea.dir/kbool/src/instonly.o
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/area.dir/build.make libarea/CMakeFiles/area.dir/kbool/src/instonly.o
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/heeksarea.dir/build.make libarea/CMakeFiles/heeksarea.dir/kbool/src/instonly.o
 .PHONY : kbool/src/instonly.o
 
 # target to preprocess a source file
 kbool/src/instonly.i:
-	$(MAKE) -f CMakeFiles/area.dir/build.make CMakeFiles/area.dir/kbool/src/instonly.i
-	$(MAKE) -f CMakeFiles/heeksarea.dir/build.make CMakeFiles/heeksarea.dir/kbool/src/instonly.i
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/area.dir/build.make libarea/CMakeFiles/area.dir/kbool/src/instonly.i
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/heeksarea.dir/build.make libarea/CMakeFiles/heeksarea.dir/kbool/src/instonly.i
 .PHONY : kbool/src/instonly.i
 
 # target to generate assembly for a file
 kbool/src/instonly.s:
-	$(MAKE) -f CMakeFiles/area.dir/build.make CMakeFiles/area.dir/kbool/src/instonly.s
-	$(MAKE) -f CMakeFiles/heeksarea.dir/build.make CMakeFiles/heeksarea.dir/kbool/src/instonly.s
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/area.dir/build.make libarea/CMakeFiles/area.dir/kbool/src/instonly.s
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/heeksarea.dir/build.make libarea/CMakeFiles/heeksarea.dir/kbool/src/instonly.s
 .PHONY : kbool/src/instonly.s
 
 # target to build an object file
 kbool/src/line.o:
-	$(MAKE) -f CMakeFiles/area.dir/build.make CMakeFiles/area.dir/kbool/src/line.o
-	$(MAKE) -f CMakeFiles/heeksarea.dir/build.make CMakeFiles/heeksarea.dir/kbool/src/line.o
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/area.dir/build.make libarea/CMakeFiles/area.dir/kbool/src/line.o
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/heeksarea.dir/build.make libarea/CMakeFiles/heeksarea.dir/kbool/src/line.o
 .PHONY : kbool/src/line.o
 
 # target to preprocess a source file
 kbool/src/line.i:
-	$(MAKE) -f CMakeFiles/area.dir/build.make CMakeFiles/area.dir/kbool/src/line.i
-	$(MAKE) -f CMakeFiles/heeksarea.dir/build.make CMakeFiles/heeksarea.dir/kbool/src/line.i
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/area.dir/build.make libarea/CMakeFiles/area.dir/kbool/src/line.i
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/heeksarea.dir/build.make libarea/CMakeFiles/heeksarea.dir/kbool/src/line.i
 .PHONY : kbool/src/line.i
 
 # target to generate assembly for a file
 kbool/src/line.s:
-	$(MAKE) -f CMakeFiles/area.dir/build.make CMakeFiles/area.dir/kbool/src/line.s
-	$(MAKE) -f CMakeFiles/heeksarea.dir/build.make CMakeFiles/heeksarea.dir/kbool/src/line.s
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/area.dir/build.make libarea/CMakeFiles/area.dir/kbool/src/line.s
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/heeksarea.dir/build.make libarea/CMakeFiles/heeksarea.dir/kbool/src/line.s
 .PHONY : kbool/src/line.s
 
 # target to build an object file
 kbool/src/link.o:
-	$(MAKE) -f CMakeFiles/area.dir/build.make CMakeFiles/area.dir/kbool/src/link.o
-	$(MAKE) -f CMakeFiles/heeksarea.dir/build.make CMakeFiles/heeksarea.dir/kbool/src/link.o
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/area.dir/build.make libarea/CMakeFiles/area.dir/kbool/src/link.o
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/heeksarea.dir/build.make libarea/CMakeFiles/heeksarea.dir/kbool/src/link.o
 .PHONY : kbool/src/link.o
 
 # target to preprocess a source file
 kbool/src/link.i:
-	$(MAKE) -f CMakeFiles/area.dir/build.make CMakeFiles/area.dir/kbool/src/link.i
-	$(MAKE) -f CMakeFiles/heeksarea.dir/build.make CMakeFiles/heeksarea.dir/kbool/src/link.i
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/area.dir/build.make libarea/CMakeFiles/area.dir/kbool/src/link.i
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/heeksarea.dir/build.make libarea/CMakeFiles/heeksarea.dir/kbool/src/link.i
 .PHONY : kbool/src/link.i
 
 # target to generate assembly for a file
 kbool/src/link.s:
-	$(MAKE) -f CMakeFiles/area.dir/build.make CMakeFiles/area.dir/kbool/src/link.s
-	$(MAKE) -f CMakeFiles/heeksarea.dir/build.make CMakeFiles/heeksarea.dir/kbool/src/link.s
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/area.dir/build.make libarea/CMakeFiles/area.dir/kbool/src/link.s
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/heeksarea.dir/build.make libarea/CMakeFiles/heeksarea.dir/kbool/src/link.s
 .PHONY : kbool/src/link.s
 
 # target to build an object file
 kbool/src/lpoint.o:
-	$(MAKE) -f CMakeFiles/area.dir/build.make CMakeFiles/area.dir/kbool/src/lpoint.o
-	$(MAKE) -f CMakeFiles/heeksarea.dir/build.make CMakeFiles/heeksarea.dir/kbool/src/lpoint.o
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/area.dir/build.make libarea/CMakeFiles/area.dir/kbool/src/lpoint.o
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/heeksarea.dir/build.make libarea/CMakeFiles/heeksarea.dir/kbool/src/lpoint.o
 .PHONY : kbool/src/lpoint.o
 
 # target to preprocess a source file
 kbool/src/lpoint.i:
-	$(MAKE) -f CMakeFiles/area.dir/build.make CMakeFiles/area.dir/kbool/src/lpoint.i
-	$(MAKE) -f CMakeFiles/heeksarea.dir/build.make CMakeFiles/heeksarea.dir/kbool/src/lpoint.i
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/area.dir/build.make libarea/CMakeFiles/area.dir/kbool/src/lpoint.i
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/heeksarea.dir/build.make libarea/CMakeFiles/heeksarea.dir/kbool/src/lpoint.i
 .PHONY : kbool/src/lpoint.i
 
 # target to generate assembly for a file
 kbool/src/lpoint.s:
-	$(MAKE) -f CMakeFiles/area.dir/build.make CMakeFiles/area.dir/kbool/src/lpoint.s
-	$(MAKE) -f CMakeFiles/heeksarea.dir/build.make CMakeFiles/heeksarea.dir/kbool/src/lpoint.s
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/area.dir/build.make libarea/CMakeFiles/area.dir/kbool/src/lpoint.s
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/heeksarea.dir/build.make libarea/CMakeFiles/heeksarea.dir/kbool/src/lpoint.s
 .PHONY : kbool/src/lpoint.s
 
 # target to build an object file
 kbool/src/node.o:
-	$(MAKE) -f CMakeFiles/area.dir/build.make CMakeFiles/area.dir/kbool/src/node.o
-	$(MAKE) -f CMakeFiles/heeksarea.dir/build.make CMakeFiles/heeksarea.dir/kbool/src/node.o
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/area.dir/build.make libarea/CMakeFiles/area.dir/kbool/src/node.o
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/heeksarea.dir/build.make libarea/CMakeFiles/heeksarea.dir/kbool/src/node.o
 .PHONY : kbool/src/node.o
 
 # target to preprocess a source file
 kbool/src/node.i:
-	$(MAKE) -f CMakeFiles/area.dir/build.make CMakeFiles/area.dir/kbool/src/node.i
-	$(MAKE) -f CMakeFiles/heeksarea.dir/build.make CMakeFiles/heeksarea.dir/kbool/src/node.i
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/area.dir/build.make libarea/CMakeFiles/area.dir/kbool/src/node.i
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/heeksarea.dir/build.make libarea/CMakeFiles/heeksarea.dir/kbool/src/node.i
 .PHONY : kbool/src/node.i
 
 # target to generate assembly for a file
 kbool/src/node.s:
-	$(MAKE) -f CMakeFiles/area.dir/build.make CMakeFiles/area.dir/kbool/src/node.s
-	$(MAKE) -f CMakeFiles/heeksarea.dir/build.make CMakeFiles/heeksarea.dir/kbool/src/node.s
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/area.dir/build.make libarea/CMakeFiles/area.dir/kbool/src/node.s
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/heeksarea.dir/build.make libarea/CMakeFiles/heeksarea.dir/kbool/src/node.s
 .PHONY : kbool/src/node.s
 
 # target to build an object file
 kbool/src/record.o:
-	$(MAKE) -f CMakeFiles/area.dir/build.make CMakeFiles/area.dir/kbool/src/record.o
-	$(MAKE) -f CMakeFiles/heeksarea.dir/build.make CMakeFiles/heeksarea.dir/kbool/src/record.o
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/area.dir/build.make libarea/CMakeFiles/area.dir/kbool/src/record.o
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/heeksarea.dir/build.make libarea/CMakeFiles/heeksarea.dir/kbool/src/record.o
 .PHONY : kbool/src/record.o
 
 # target to preprocess a source file
 kbool/src/record.i:
-	$(MAKE) -f CMakeFiles/area.dir/build.make CMakeFiles/area.dir/kbool/src/record.i
-	$(MAKE) -f CMakeFiles/heeksarea.dir/build.make CMakeFiles/heeksarea.dir/kbool/src/record.i
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/area.dir/build.make libarea/CMakeFiles/area.dir/kbool/src/record.i
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/heeksarea.dir/build.make libarea/CMakeFiles/heeksarea.dir/kbool/src/record.i
 .PHONY : kbool/src/record.i
 
 # target to generate assembly for a file
 kbool/src/record.s:
-	$(MAKE) -f CMakeFiles/area.dir/build.make CMakeFiles/area.dir/kbool/src/record.s
-	$(MAKE) -f CMakeFiles/heeksarea.dir/build.make CMakeFiles/heeksarea.dir/kbool/src/record.s
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/area.dir/build.make libarea/CMakeFiles/area.dir/kbool/src/record.s
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/heeksarea.dir/build.make libarea/CMakeFiles/heeksarea.dir/kbool/src/record.s
 .PHONY : kbool/src/record.s
 
 # target to build an object file
 kbool/src/scanbeam.o:
-	$(MAKE) -f CMakeFiles/area.dir/build.make CMakeFiles/area.dir/kbool/src/scanbeam.o
-	$(MAKE) -f CMakeFiles/heeksarea.dir/build.make CMakeFiles/heeksarea.dir/kbool/src/scanbeam.o
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/area.dir/build.make libarea/CMakeFiles/area.dir/kbool/src/scanbeam.o
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/heeksarea.dir/build.make libarea/CMakeFiles/heeksarea.dir/kbool/src/scanbeam.o
 .PHONY : kbool/src/scanbeam.o
 
 # target to preprocess a source file
 kbool/src/scanbeam.i:
-	$(MAKE) -f CMakeFiles/area.dir/build.make CMakeFiles/area.dir/kbool/src/scanbeam.i
-	$(MAKE) -f CMakeFiles/heeksarea.dir/build.make CMakeFiles/heeksarea.dir/kbool/src/scanbeam.i
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/area.dir/build.make libarea/CMakeFiles/area.dir/kbool/src/scanbeam.i
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/heeksarea.dir/build.make libarea/CMakeFiles/heeksarea.dir/kbool/src/scanbeam.i
 .PHONY : kbool/src/scanbeam.i
 
 # target to generate assembly for a file
 kbool/src/scanbeam.s:
-	$(MAKE) -f CMakeFiles/area.dir/build.make CMakeFiles/area.dir/kbool/src/scanbeam.s
-	$(MAKE) -f CMakeFiles/heeksarea.dir/build.make CMakeFiles/heeksarea.dir/kbool/src/scanbeam.s
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/area.dir/build.make libarea/CMakeFiles/area.dir/kbool/src/scanbeam.s
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/heeksarea.dir/build.make libarea/CMakeFiles/heeksarea.dir/kbool/src/scanbeam.s
 .PHONY : kbool/src/scanbeam.s
 
 # target to build an object file
 kurve/Construction.o:
-	$(MAKE) -f CMakeFiles/area.dir/build.make CMakeFiles/area.dir/kurve/Construction.o
-	$(MAKE) -f CMakeFiles/heeksarea.dir/build.make CMakeFiles/heeksarea.dir/kurve/Construction.o
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/area.dir/build.make libarea/CMakeFiles/area.dir/kurve/Construction.o
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/heeksarea.dir/build.make libarea/CMakeFiles/heeksarea.dir/kurve/Construction.o
 .PHONY : kurve/Construction.o
 
 # target to preprocess a source file
 kurve/Construction.i:
-	$(MAKE) -f CMakeFiles/area.dir/build.make CMakeFiles/area.dir/kurve/Construction.i
-	$(MAKE) -f CMakeFiles/heeksarea.dir/build.make CMakeFiles/heeksarea.dir/kurve/Construction.i
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/area.dir/build.make libarea/CMakeFiles/area.dir/kurve/Construction.i
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/heeksarea.dir/build.make libarea/CMakeFiles/heeksarea.dir/kurve/Construction.i
 .PHONY : kurve/Construction.i
 
 # target to generate assembly for a file
 kurve/Construction.s:
-	$(MAKE) -f CMakeFiles/area.dir/build.make CMakeFiles/area.dir/kurve/Construction.s
-	$(MAKE) -f CMakeFiles/heeksarea.dir/build.make CMakeFiles/heeksarea.dir/kurve/Construction.s
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/area.dir/build.make libarea/CMakeFiles/area.dir/kurve/Construction.s
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/heeksarea.dir/build.make libarea/CMakeFiles/heeksarea.dir/kurve/Construction.s
 .PHONY : kurve/Construction.s
 
 # target to build an object file
 kurve/Finite.o:
-	$(MAKE) -f CMakeFiles/area.dir/build.make CMakeFiles/area.dir/kurve/Finite.o
-	$(MAKE) -f CMakeFiles/heeksarea.dir/build.make CMakeFiles/heeksarea.dir/kurve/Finite.o
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/area.dir/build.make libarea/CMakeFiles/area.dir/kurve/Finite.o
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/heeksarea.dir/build.make libarea/CMakeFiles/heeksarea.dir/kurve/Finite.o
 .PHONY : kurve/Finite.o
 
 # target to preprocess a source file
 kurve/Finite.i:
-	$(MAKE) -f CMakeFiles/area.dir/build.make CMakeFiles/area.dir/kurve/Finite.i
-	$(MAKE) -f CMakeFiles/heeksarea.dir/build.make CMakeFiles/heeksarea.dir/kurve/Finite.i
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/area.dir/build.make libarea/CMakeFiles/area.dir/kurve/Finite.i
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/heeksarea.dir/build.make libarea/CMakeFiles/heeksarea.dir/kurve/Finite.i
 .PHONY : kurve/Finite.i
 
 # target to generate assembly for a file
 kurve/Finite.s:
-	$(MAKE) -f CMakeFiles/area.dir/build.make CMakeFiles/area.dir/kurve/Finite.s
-	$(MAKE) -f CMakeFiles/heeksarea.dir/build.make CMakeFiles/heeksarea.dir/kurve/Finite.s
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/area.dir/build.make libarea/CMakeFiles/area.dir/kurve/Finite.s
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/heeksarea.dir/build.make libarea/CMakeFiles/heeksarea.dir/kurve/Finite.s
 .PHONY : kurve/Finite.s
 
 # target to build an object file
 kurve/Matrix.o:
-	$(MAKE) -f CMakeFiles/area.dir/build.make CMakeFiles/area.dir/kurve/Matrix.o
-	$(MAKE) -f CMakeFiles/heeksarea.dir/build.make CMakeFiles/heeksarea.dir/kurve/Matrix.o
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/area.dir/build.make libarea/CMakeFiles/area.dir/kurve/Matrix.o
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/heeksarea.dir/build.make libarea/CMakeFiles/heeksarea.dir/kurve/Matrix.o
 .PHONY : kurve/Matrix.o
 
 # target to preprocess a source file
 kurve/Matrix.i:
-	$(MAKE) -f CMakeFiles/area.dir/build.make CMakeFiles/area.dir/kurve/Matrix.i
-	$(MAKE) -f CMakeFiles/heeksarea.dir/build.make CMakeFiles/heeksarea.dir/kurve/Matrix.i
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/area.dir/build.make libarea/CMakeFiles/area.dir/kurve/Matrix.i
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/heeksarea.dir/build.make libarea/CMakeFiles/heeksarea.dir/kurve/Matrix.i
 .PHONY : kurve/Matrix.i
 
 # target to generate assembly for a file
 kurve/Matrix.s:
-	$(MAKE) -f CMakeFiles/area.dir/build.make CMakeFiles/area.dir/kurve/Matrix.s
-	$(MAKE) -f CMakeFiles/heeksarea.dir/build.make CMakeFiles/heeksarea.dir/kurve/Matrix.s
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/area.dir/build.make libarea/CMakeFiles/area.dir/kurve/Matrix.s
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/heeksarea.dir/build.make libarea/CMakeFiles/heeksarea.dir/kurve/Matrix.s
 .PHONY : kurve/Matrix.s
 
 # target to build an object file
 kurve/kurve.o:
-	$(MAKE) -f CMakeFiles/area.dir/build.make CMakeFiles/area.dir/kurve/kurve.o
-	$(MAKE) -f CMakeFiles/heeksarea.dir/build.make CMakeFiles/heeksarea.dir/kurve/kurve.o
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/area.dir/build.make libarea/CMakeFiles/area.dir/kurve/kurve.o
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/heeksarea.dir/build.make libarea/CMakeFiles/heeksarea.dir/kurve/kurve.o
 .PHONY : kurve/kurve.o
 
 # target to preprocess a source file
 kurve/kurve.i:
-	$(MAKE) -f CMakeFiles/area.dir/build.make CMakeFiles/area.dir/kurve/kurve.i
-	$(MAKE) -f CMakeFiles/heeksarea.dir/build.make CMakeFiles/heeksarea.dir/kurve/kurve.i
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/area.dir/build.make libarea/CMakeFiles/area.dir/kurve/kurve.i
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/heeksarea.dir/build.make libarea/CMakeFiles/heeksarea.dir/kurve/kurve.i
 .PHONY : kurve/kurve.i
 
 # target to generate assembly for a file
 kurve/kurve.s:
-	$(MAKE) -f CMakeFiles/area.dir/build.make CMakeFiles/area.dir/kurve/kurve.s
-	$(MAKE) -f CMakeFiles/heeksarea.dir/build.make CMakeFiles/heeksarea.dir/kurve/kurve.s
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/area.dir/build.make libarea/CMakeFiles/area.dir/kurve/kurve.s
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/heeksarea.dir/build.make libarea/CMakeFiles/heeksarea.dir/kurve/kurve.s
 .PHONY : kurve/kurve.s
 
 # target to build an object file
 kurve/offset.o:
-	$(MAKE) -f CMakeFiles/area.dir/build.make CMakeFiles/area.dir/kurve/offset.o
-	$(MAKE) -f CMakeFiles/heeksarea.dir/build.make CMakeFiles/heeksarea.dir/kurve/offset.o
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/area.dir/build.make libarea/CMakeFiles/area.dir/kurve/offset.o
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/heeksarea.dir/build.make libarea/CMakeFiles/heeksarea.dir/kurve/offset.o
 .PHONY : kurve/offset.o
 
 # target to preprocess a source file
 kurve/offset.i:
-	$(MAKE) -f CMakeFiles/area.dir/build.make CMakeFiles/area.dir/kurve/offset.i
-	$(MAKE) -f CMakeFiles/heeksarea.dir/build.make CMakeFiles/heeksarea.dir/kurve/offset.i
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/area.dir/build.make libarea/CMakeFiles/area.dir/kurve/offset.i
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/heeksarea.dir/build.make libarea/CMakeFiles/heeksarea.dir/kurve/offset.i
 .PHONY : kurve/offset.i
 
 # target to generate assembly for a file
 kurve/offset.s:
-	$(MAKE) -f CMakeFiles/area.dir/build.make CMakeFiles/area.dir/kurve/offset.s
-	$(MAKE) -f CMakeFiles/heeksarea.dir/build.make CMakeFiles/heeksarea.dir/kurve/offset.s
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/area.dir/build.make libarea/CMakeFiles/area.dir/kurve/offset.s
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(MAKE) -f libarea/CMakeFiles/heeksarea.dir/build.make libarea/CMakeFiles/heeksarea.dir/kurve/offset.s
 .PHONY : kurve/offset.s
 
 # Help Target
@@ -628,6 +650,8 @@ help:
 	@echo "... install/local"
 	@echo "... install/strip"
 	@echo "... list_install_components"
+	@echo "... package"
+	@echo "... package_source"
 	@echo "... rebuild_cache"
 	@echo "... Arc.o"
 	@echo "... Arc.i"
@@ -715,6 +739,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	$(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/kaben/Developer/Source/heekscad-kaben/heekscad/heekscnc && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 
