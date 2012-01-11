@@ -3,8 +3,11 @@
 // Copyright 2011, Dan Heeks
 // This program is released under the BSD license. See the file COPYING for details.
 
+#include <cstdio>
 #include "Area.h"
 #include "AreaOrderer.h"
+
+#include "TestMacros.h"
 
 double CArea::m_accuracy = 0.01;
 double CArea::m_units = 1.0;
@@ -60,6 +63,7 @@ void CArea::GetBox(CAreaBox &box)
 
 void CArea::Reorder()
 {
+  dprintf("entered ...\n");
 	// curves may have been added with wrong directions
 	// test all kurves to see which one are outsides and which are insides and 
 	// make sure outsides are anti-clockwise and insides are clockwise
@@ -68,17 +72,25 @@ void CArea::Reorder()
 	// returns 1, if the curves are overlapping
 
 	CAreaOrderer ao;
+  int curve_num = 0;
+  dprintf("processing %zd curves ...\n", m_curves.size());
 	for(std::list<CCurve>::iterator It = m_curves.begin(); It != m_curves.end(); It++)
 	{
+    curve_num++;
 		CCurve& curve = *It;
+    dprintf("(curve %d/%zd) inserting curve into orderer ...\n", curve_num, m_curves.size());
 		ao.Insert(&curve);
+    dprintf("(curve %d/%zd) ... done inserting curve into orderer.\n", curve_num, m_curves.size());
 		if(m_set_processing_length_in_split)
 		{
 			CArea::m_processing_done += (m_split_processing_length / m_curves.size());
 		}
 	}
-
+  dprintf("... done processing %zd curves.\n", m_curves.size());
+  dprintf("resetting area data ...\n");
 	*this = ao.ResultArea();
+  dprintf("... done resetting area data.\n");
+  dprintf("... done.\n");
 }
 
 class ZigZag
@@ -451,6 +463,7 @@ static void zigzag(const CArea &input_a)
 
 void CArea::SplitAndMakePocketToolpath(std::list<CCurve> &curve_list, const CAreaPocketParams &params)const
 {
+  dprintf("entered ...\n");
 	CArea::m_processing_done = 0.0;
 
 	double save_units = CArea::m_units;
@@ -458,7 +471,9 @@ void CArea::SplitAndMakePocketToolpath(std::list<CCurve> &curve_list, const CAre
 	std::list<CArea> areas;
 	m_split_processing_length = 50.0; // jump to 50 percent after split
 	m_set_processing_length_in_split = true;
+  dprintf("Split() ...\n");
 	Split(areas);
+  dprintf(".. Split() done.\n");
 	m_set_processing_length_in_split = false;
 	CArea::m_processing_done = m_split_processing_length;
 	CArea::m_units = save_units;
@@ -467,16 +482,24 @@ void CArea::SplitAndMakePocketToolpath(std::list<CCurve> &curve_list, const CAre
 
 	double single_area_length = 50.0 / areas.size();
 
+  int area_num = 0;
+  dprintf("processing %zd areas ...\n", areas.size());
 	for(std::list<CArea>::iterator It = areas.begin(); It != areas.end(); It++)
 	{
+    area_num++;
 		CArea::m_single_area_processing_length = single_area_length;
 		CArea &ar = *It;
+    dprintf("(area %d/%zd) MakePocketToolpath() ...\n", area_num, areas.size());
 		ar.MakePocketToolpath(curve_list, params);
+    dprintf("(area %d/%zd) ... MakePocketToolpath() done.\n", area_num, areas.size());
 	}
+  dprintf("... done processing %zd areas.\n", areas.size());
+  dprintf("... done.\n");
 }
 
 void CArea::MakePocketToolpath(std::list<CCurve> &curve_list, const CAreaPocketParams &params)const
 {
+  dprintf("entered ...\n");
 	double radians_angle = params.zig_angle * PI / 180;
 	sin_angle_for_zigs = sin(-radians_angle);
 	cos_angle_for_zigs = cos(-radians_angle);
@@ -507,57 +530,88 @@ void CArea::MakePocketToolpath(std::list<CCurve> &curve_list, const CAreaPocketP
 
 		CArea::m_single_area_processing_length /= m_areas.size();
 
+    int area_num = 0;
+    dprintf("spiral-pocketing %zd areas ...\n", m_areas.size());
 		for(std::list<CArea>::iterator It = m_areas.begin(); It != m_areas.end(); It++)
 		{
+      area_num++;
 			CArea &a2 = *It;
+      dprintf("(area %d/%zd) MakeOnePocketCurve() ...\n", area_num, m_areas.size());
 			a2.MakeOnePocketCurve(curve_list, params);
+      dprintf("(area %d/%zd) ... MakeOnePocketCurve() done.\n", area_num, m_areas.size());
 		}
+    dprintf("... done spiral-pocketing %zd areas.\n", m_areas.size());
 	}
 
 	if(params.mode == SingleOffsetPocketMode || params.mode == ZigZagThenSingleOffsetPocketMode)
 	{
+    dprintf("processing single offset ...\n");
 		// add the single offset too
 		for(std::list<CCurve>::iterator It = a_offset.m_curves.begin(); It != a_offset.m_curves.end(); It++)
 		{
 			CCurve& curve = *It;
 			curve_list.push_back(curve);
 		}
+    dprintf("... processing single offset done.\n");
 	}
+  dprintf("... done.\n");
 }
 
 void CArea::Split(std::list<CArea> &m_areas)const
 {
+  dprintf("entered ...\n");
 	if(HolesLinked())
 	{
+    int curve_num = 0;
+    dprintf("HolesLinked() returns true; processing %zd curves ...\n", m_curves.size());
 		for(std::list<CCurve>::const_iterator It = m_curves.begin(); It != m_curves.end(); It++)
 		{
+      curve_num++;
 			const CCurve& curve = *It;
 			m_areas.push_back(CArea());
 			m_areas.back().m_curves.push_back(curve);
 		}
+    dprintf("... done processing %zd curves.\n", m_curves.size());
 	}
 	else
 	{
+    dprintf("HolesLinked() returns false ...\n");
 		CArea a = *this;
+    dprintf("Reorder() ...\n");
 		a.Reorder();
+    dprintf("... Reorder() done.\n");
 
 		if(CArea::m_please_abort)return;
 
+    int curve_num = 0;
+    dprintf("processing %zd curves ...\n", a.m_curves.size());
 		for(std::list<CCurve>::const_iterator It = a.m_curves.begin(); It != a.m_curves.end(); It++)
 		{
+      curve_num++;
+      dprintf("(curve %d/%zd) checking IsClockwise() ...\n", curve_num, a.m_curves.size());
 			const CCurve& curve = *It;
 			if(curve.IsClockwise())
 			{
-				if(m_areas.size() > 0)
+        dprintf("(curve %d/%zd) ... IsClockwise() returns true.\n", curve_num, a.m_curves.size());
+        dprintf("(curve %d/%zd) checking whether to push curve to area's curve array ...\n", curve_num, a.m_curves.size());
+				if(m_areas.size() > 0){
+          dprintf("(curve %d/%zd) ... yep; pushing curve into last area ...\n", curve_num, a.m_curves.size());
 					m_areas.back().m_curves.push_back(curve);
+        } else {
+          dprintf("(curve %d/%zd) ... nope.\n", curve_num, a.m_curves.size());
+        }
 			}
 			else
 			{
+        dprintf("(curve %d/%zd) ... IsClockwise() returns false; pushing curve into new area ...\n", curve_num, a.m_curves.size());
 				m_areas.push_back(CArea());
 				m_areas.back().m_curves.push_back(curve);
+        dprintf("(curve %d/%zd) ... done pushing curve into new area.\n", curve_num, a.m_curves.size());
 			}
 		}
+    dprintf("... done processing %zd curves.\n", m_curves.size());
 	}
+  dprintf("... done.\n");
 }
 
 double CArea::GetArea(bool always_add)const
@@ -573,6 +627,119 @@ double CArea::GetArea(bool always_add)const
 	}
 	return area;
 }
+
+void DetailSpan(Span &span)
+{
+  dprintf("  span: is_start_span:%d, p:(%g, %g), v.type:%d, v.p:(%g, %g), v.c:(%g, %g)\n",
+    span.m_start_span,
+    span.m_p.x, span.m_p.y,
+    span.m_v.m_type,
+    span.m_v.m_p.x, span.m_v.m_p.y,
+    span.m_v.m_c.x, span.m_v.m_c.y
+  );
+}
+
+void DetailVertex(CVertex &vertex)
+{
+  dprintf("  vertex: type:%d, p:(%g, %g), c:(%g, %g)\n",
+    vertex.m_type,
+    vertex.m_p.x, vertex.m_p.y,
+    vertex.m_c.x, vertex.m_c.y
+  );
+}
+
+void DetailCurve(CCurve &curve)
+{
+  dprintf("entered ...\n");
+  dprintf("new curve ...\n");
+  dprintf("IsClosed():%d\n", curve.IsClosed());
+  dprintf("IsClockwise():%d\n", curve.IsClockwise());
+  dprintf("as vertices:\n");
+  for(std::list<CVertex>::iterator v = curve.m_vertices.begin(); v != curve.m_vertices.end(); v++){
+    DetailVertex(*v);
+  }
+  dprintf("as spans:\n");
+  std::list<Span> spans;
+  curve.GetSpans(spans);
+  for(std::list<Span>::iterator s = spans.begin(); s != spans.end(); s++){
+    DetailSpan(*s);
+  }
+  dprintf("... done.\n");
+}
+
+void DetailArea(CArea &area)
+{
+  dprintf("entered ...\n");
+  for(std::list<CCurve>::iterator c = area.m_curves.begin(); c != area.m_curves.end(); c++){
+    dprintf("new curve ...\n");
+    DetailCurve(*c);
+  }
+  dprintf("... done.\n");
+}
+
+
+/*
+This is a minimal version of the recur() function in HeeksCNC's area_funcs.py. 
+*/
+void CArea::PocketRecursion(std::list<CArea> &arealist, const CAreaPocketParams &params, int depth){
+  dprintf("(depth %d) entered ...\n", depth);
+  DetailArea(*this);
+  if(params.from_center) { arealist.push_front(*this); }
+  else { arealist.push_back(*this); }
+
+  dprintf("(depth %d) instantiating new offset area ...\n", depth);
+  CArea a_offs(*this);
+  dprintf("(depth %d) ... done instantiating new offset area.\n", depth);
+  dprintf("(depth %d) Offset() by %g ...\n", depth, params.stepover);
+  a_offs.Offset(params.stepover);
+  dprintf("(depth %d) ... Offset() done.\n", depth);
+
+  int curve_num = 0;
+  dprintf("(depth %d) processing %zd curves ...\n", depth, a_offs.m_curves.size());
+  for(std::list<CCurve>::iterator c = a_offs.m_curves.begin(); c != a_offs.m_curves.end(); c++){
+    curve_num++;
+    dprintf("(depth %d) (curve %d/%zd) instantiatng new area ...\n", depth, curve_num, a_offs.m_curves.size());
+    CArea a;
+    a.append(*c);
+    dprintf("(depth %d) (curve %d/%zd) PocketRecursion() ...\n", depth, curve_num, a_offs.m_curves.size());
+    a.PocketRecursion(arealist, params, depth+1);
+    dprintf("(depth %d) (curve %d/%zd) ... PocketRecursion() done.\n", depth, curve_num, a_offs.m_curves.size());
+  }
+  dprintf("(depth %d) ... done processing curves.\n", depth);
+  dprintf("(depth %d) ... done.\n", depth);
+}
+
+/*
+This is a minimal version of the pocket() function in HeeksCNC's area_funcs.py. 
+*/
+void CArea::RecursivePocket(std::list<CCurve> &toolpath, const CAreaPocketParams &params, bool recurse){
+  dprintf("entered ...\n");
+  std::list<CArea> arealist;
+
+  dprintf("instantiating new offset area ...\n");
+  CArea a_offs(*this);
+  dprintf("... done instantiating new offset area.\n");
+  dprintf("Offset() by %g ...\n", params.tool_radius + params.extra_offset);
+  a_offs.Offset(params.tool_radius + params.extra_offset);
+  dprintf("... Offset() done.\n");
+  dprintf("PocketRecursion() ...\n");
+  a_offs.PocketRecursion(arealist, params);
+  dprintf("... PocketRecursion() done.\n");
+
+  int area_num = 0;
+  dprintf("collecting curves from %zd ares ...\n", arealist.size());
+  for(std::list<CArea>::iterator a = arealist.begin(); a != arealist.end(); a++){
+    area_num++;
+    dprintf("(area %d/%zd) collecting %zd curves ...\n", area_num, arealist.size(), a->m_curves.size());
+    for(std::list<CCurve>::iterator c = a->m_curves.begin(); c != a->m_curves.end(); c++){
+      toolpath.push_back(*c);
+    }
+    dprintf("(area %d/%zd) ... done collecting curves.\n", area_num, arealist.size());
+  }
+  dprintf("... done collecting curves from areas.\n");
+  dprintf("... done.\n");
+}
+
 
 eOverlapType GetOverlapType(const CCurve& c1, const CCurve& c2)
 {

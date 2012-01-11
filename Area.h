@@ -66,6 +66,13 @@ public:
 	static bool HolesLinked();
 	void Split(std::list<CArea> &m_areas)const;
 	double GetArea(bool always_add = false)const;
+
+  /*
+  This are minimal versions of the recur() and pockets functions in HeeksCNC's
+  area_funcs.py. 
+  */
+	void PocketRecursion(std::list<CArea> &arealist, const CAreaPocketParams &params, int depth = 0);
+	void RecursivePocket(std::list<CCurve> &toolpath, const CAreaPocketParams &params, bool recurse = true);
 };
 
 enum eOverlapType
