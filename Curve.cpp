@@ -543,6 +543,7 @@ void CCurve::RemoveTinySpans() {
 			new_curve.m_vertices.push_back(vertex);
 		}
 	}
+    new_curve.m_recur_depth = m_recur_depth;
 	*this = new_curve;
 }
 
