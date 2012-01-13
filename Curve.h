@@ -73,6 +73,10 @@ protected:
 
 public:
 	std::list<CVertex> m_vertices;
+    int m_recur_depth;
+
+	CCurve():m_recur_depth(0){}
+
 	void append(const CVertex& vertex);
 
 	void FitArcs();
