@@ -39,6 +39,7 @@ class CArea
 {
 public:
 	std::list<CCurve> m_curves;
+  int m_recur_depth;
 	static double m_accuracy;
 	static double m_units; // 1.0 for mm, 25.4 for inches. All points are multiplied by this before going to the engine
 	static bool m_fit_arcs;
@@ -71,8 +72,8 @@ public:
   This are minimal versions of the recur() and pockets functions in HeeksCNC's
   area_funcs.py. 
   */
-	void PocketRecursion(std::list<CArea> &arealist, const CAreaPocketParams &params, int depth = 0);
-	void RecursivePocket(std::list<CCurve> &toolpath, const CAreaPocketParams &params, bool recurse = true);
+	void PocketRecursion(std::list<CArea> &areas, const CAreaPocketParams &params, int depth = 1);
+	void RecursivePocket(std::list<CCurve> &curves, const CAreaPocketParams &params);
 };
 
 enum eOverlapType

@@ -63,7 +63,6 @@ void CArea::GetBox(CAreaBox &box)
 
 void CArea::Reorder()
 {
-  dprintf("entered ...\n");
 	// curves may have been added with wrong directions
 	// test all kurves to see which one are outsides and which are insides and 
 	// make sure outsides are anti-clockwise and insides are clockwise
@@ -72,25 +71,16 @@ void CArea::Reorder()
 	// returns 1, if the curves are overlapping
 
 	CAreaOrderer ao;
-  int curve_num = 0;
-  dprintf("processing %zd curves ...\n", m_curves.size());
 	for(std::list<CCurve>::iterator It = m_curves.begin(); It != m_curves.end(); It++)
 	{
-    curve_num++;
 		CCurve& curve = *It;
-    dprintf("(curve %d/%zd) inserting curve into orderer ...\n", curve_num, m_curves.size());
 		ao.Insert(&curve);
-    dprintf("(curve %d/%zd) ... done inserting curve into orderer.\n", curve_num, m_curves.size());
 		if(m_set_processing_length_in_split)
 		{
 			CArea::m_processing_done += (m_split_processing_length / m_curves.size());
 		}
 	}
-  dprintf("... done processing %zd curves.\n", m_curves.size());
-  dprintf("resetting area data ...\n");
 	*this = ao.ResultArea();
-  dprintf("... done resetting area data.\n");
-  dprintf("... done.\n");
 }
 
 class ZigZag
@@ -681,63 +671,36 @@ void DetailArea(CArea &area)
 /*
 This is a minimal version of the recur() function in HeeksCNC's area_funcs.py. 
 */
-void CArea::PocketRecursion(std::list<CArea> &arealist, const CAreaPocketParams &params, int depth){
-  dprintf("(depth %d) entered ...\n", depth);
-  DetailArea(*this);
-  if(params.from_center) { arealist.push_front(*this); }
-  else { arealist.push_back(*this); }
+void CArea::PocketRecursion(std::list<CArea> &areas, const CAreaPocketParams &params, int depth){
+  if(params.from_center) { areas.push_front(*this); }
+  else { areas.push_back(*this); }
 
-  dprintf("(depth %d) instantiating new offset area ...\n", depth);
   CArea a_offs(*this);
-  dprintf("(depth %d) ... done instantiating new offset area.\n", depth);
-  dprintf("(depth %d) Offset() by %g ...\n", depth, params.stepover);
   a_offs.Offset(params.stepover);
-  dprintf("(depth %d) ... Offset() done.\n", depth);
 
-  int curve_num = 0;
-  dprintf("(depth %d) processing %zd curves ...\n", depth, a_offs.m_curves.size());
   for(std::list<CCurve>::iterator c = a_offs.m_curves.begin(); c != a_offs.m_curves.end(); c++){
-    curve_num++;
-    dprintf("(depth %d) (curve %d/%zd) instantiatng new area ...\n", depth, curve_num, a_offs.m_curves.size());
+    c->m_recur_depth = depth;
     CArea a;
     a.append(*c);
-    dprintf("(depth %d) (curve %d/%zd) PocketRecursion() ...\n", depth, curve_num, a_offs.m_curves.size());
-    a.PocketRecursion(arealist, params, depth+1);
-    dprintf("(depth %d) (curve %d/%zd) ... PocketRecursion() done.\n", depth, curve_num, a_offs.m_curves.size());
+    a.PocketRecursion(areas, params, depth+1);
   }
-  dprintf("(depth %d) ... done processing curves.\n", depth);
-  dprintf("(depth %d) ... done.\n", depth);
 }
 
 /*
 This is a minimal version of the pocket() function in HeeksCNC's area_funcs.py. 
 */
-void CArea::RecursivePocket(std::list<CCurve> &toolpath, const CAreaPocketParams &params, bool recurse){
-  dprintf("entered ...\n");
-  std::list<CArea> arealist;
+void CArea::RecursivePocket(std::list<CCurve> &curves, const CAreaPocketParams &params){
+  std::list<CArea> areas;
 
-  dprintf("instantiating new offset area ...\n");
   CArea a_offs(*this);
-  dprintf("... done instantiating new offset area.\n");
-  dprintf("Offset() by %g ...\n", params.tool_radius + params.extra_offset);
   a_offs.Offset(params.tool_radius + params.extra_offset);
-  dprintf("... Offset() done.\n");
-  dprintf("PocketRecursion() ...\n");
-  a_offs.PocketRecursion(arealist, params);
-  dprintf("... PocketRecursion() done.\n");
+  a_offs.PocketRecursion(areas, params, 1);
 
-  int area_num = 0;
-  dprintf("collecting curves from %zd ares ...\n", arealist.size());
-  for(std::list<CArea>::iterator a = arealist.begin(); a != arealist.end(); a++){
-    area_num++;
-    dprintf("(area %d/%zd) collecting %zd curves ...\n", area_num, arealist.size(), a->m_curves.size());
+  for(std::list<CArea>::iterator a = areas.begin(); a != areas.end(); a++){
     for(std::list<CCurve>::iterator c = a->m_curves.begin(); c != a->m_curves.end(); c++){
-      toolpath.push_back(*c);
+      curves.push_back(*c);
     }
-    dprintf("(area %d/%zd) ... done collecting curves.\n", area_num, arealist.size());
   }
-  dprintf("... done collecting curves from areas.\n");
-  dprintf("... done.\n");
 }
 
 
